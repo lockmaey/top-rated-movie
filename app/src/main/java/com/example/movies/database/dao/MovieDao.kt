@@ -13,7 +13,7 @@ interface MovieDao {
     @Query("SELECT id, title, release_date, poster_path FROM movie ORDER BY title ASC")
     fun getAll(): Flow<List<Movie>>
 
-    @Query("SELECT id, title, release_date, poster_path FROM movie WHERE title LIKE '%' || :search || '%' OR release_date = :search ORDER BY title ASC")
+    @Query("SELECT id, title, release_date, poster_path FROM movie WHERE title LIKE '%' || :search || '%' OR release_date LIKE :search || '%' ORDER BY title ASC")
     fun filterByTitleOrDate(search: String): Flow<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
