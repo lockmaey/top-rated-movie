@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         val moviesList = initializeData(context = applicationContext)
 
         val movieAdapter = MovieAdapter(
-            context = applicationContext,
             movieList = mutableListOf()
         )
 
@@ -52,12 +51,6 @@ class MainActivity : AppCompatActivity() {
         movieRv.adapter = movieAdapter
 
         searchLayout.setEndIconOnClickListener {
-            /*lifecycle.coroutineScope.launch {
-                movieViewModel.filterByTitleOrYear(searchText.text.toString()).collect {
-                    println(it)
-                    //movieAdapter.updateData(it)
-                }
-            }*/
             lifecycle.coroutineScope.launch {
                 movieViewModel.filterByTitleOrYear(searchText.text.toString()).collect{
                     movieAdapter.updateData(it)

@@ -1,6 +1,5 @@
 package com.example.movies.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import com.example.movies.R
 import com.example.movies.database.entity.Movie
 
 
-class MovieAdapter(private val context: Context, private var movieList: MutableList<Movie>) :
+class MovieAdapter(private var movieList: MutableList<Movie>) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>(
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,22 +30,12 @@ class MovieAdapter(private val context: Context, private var movieList: MutableL
     override fun getItemCount() = movieList.size
 
     fun updateData(movieListNew: List<Movie>) {
-        /*if (text!!.isEmpty() || text.isBlank()) {
-            //reset data
-            initializeData(context = context)
-        } else {
-            movieList = initializeData(context = context)
-            movieList?.filter { movie ->
-                movie.title.contains(text, true)
-            } as MutableList<Movie>
-        }*/
-
         val diffCallback =
             MovieDiffCallback(oldMovies = this.movieList, newMovies = movieListNew)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         this.movieList.clear();
-         this.movieList.addAll(movieListNew);
+        this.movieList.addAll(movieListNew);
         diffResult.dispatchUpdatesTo(this);
     }
 
