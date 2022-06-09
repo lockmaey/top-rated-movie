@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Top Rated Movies</string>
     <string name="search">Search</string>
+    <string name="image_poster">Image Poster</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="date_release">date release</string>
 </resources>

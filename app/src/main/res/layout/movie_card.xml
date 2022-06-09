@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="10dp"
-        app:cardElevation="20dp"
-        >
+        app:cardElevation="20dp">
 
         <LinearLayout
             android:id="@+id/card"
@@ -23,6 +22,7 @@
                 android:id="@+id/thumbnails"
                 android:layout_width="160dp"
                 android:layout_height="240dp"
+                android:contentDescription="@string/image_poster"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintTop_toTopOf="parent">
@@ -36,25 +36,28 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:text="Movie Title"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@id/thumbnails" />
 
-    <TextView
-        android:id="@+id/date_release"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingEnd="5dp"
-        android:text="date release"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@id/title" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/movie_title"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/thumbnails" />
+
+        <TextView
+            android:id="@+id/date_release"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="5dp"
+            android:text="@string/date_release"
+            android:textColor="@color/grey_100"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/title" />
     </LinearLayout>
 
 </LinearLayout>
