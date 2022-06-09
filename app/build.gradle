@@ -61,14 +61,10 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
 
 
-    //sqllite
-
+    //sqllite   //room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-
-    //room
     implementation "androidx.room:room-ktx:$room_version"
-
 
     //paging
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
