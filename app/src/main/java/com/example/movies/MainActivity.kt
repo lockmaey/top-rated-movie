@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.ui.adapter.MovieAdapter
@@ -13,10 +14,12 @@ import com.example.movies.viewmodel.MovieViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +38,12 @@ class MainActivity : AppCompatActivity() {
 
         val moviesList = initializeData(context = applicationContext)
 
-        val movieAdapter = MovieAdapter(
-            movieList = mutableListOf()
-        )
+        movieAdapter = MovieAdapter()
 
-        lifecycle.coroutineScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             movieViewModel.insert(moviesList)
-            movieViewModel.allMovie().collect {
-                movieAdapter.updateData(it)
+            movieViewModel.movies.collectLatest {
+                movieAdapter.submitData(it)
             }
         }
 
@@ -52,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
         searchLayout.setEndIconOnClickListener {
             lifecycle.coroutineScope.launch {
-                movieViewModel.filterByTitleOrYear(searchText.text.toString()).collect{
-                    movieAdapter.updateData(it)
+                movieViewModel.filterByTitleOrYear(searchText.text.toString()).collectLatest {
+                    movieAdapter.submitData(it)
                 }
             }
         }

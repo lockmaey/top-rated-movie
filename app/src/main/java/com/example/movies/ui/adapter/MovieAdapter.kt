@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -12,9 +13,8 @@ import com.example.movies.R
 import com.example.movies.database.entity.Movie
 
 
-class MovieAdapter(private var movieList: MutableList<Movie>) :
-    RecyclerView.Adapter<MovieAdapter.ViewHolder>(
-    ) {
+class MovieAdapter :
+    PagingDataAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.movie_card, parent, false)
@@ -22,26 +22,27 @@ class MovieAdapter(private var movieList: MutableList<Movie>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.image.load(movieList[position].poster_path)
-        holder.title.text = movieList[position].title
-        holder.releaseDate.text = movieList[position].release_date.take(4)
-    }
-
-    override fun getItemCount() = movieList.size
-
-    fun updateData(movieListNew: List<Movie>) {
-        val diffCallback =
-            MovieDiffCallback(oldMovies = this.movieList, newMovies = movieListNew)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        this.movieList.clear();
-        this.movieList.addAll(movieListNew);
-        diffResult.dispatchUpdatesTo(this);
+        val movieList = getItem(position)
+        holder.image.load(movieList?.poster_path)
+        holder.title.text = movieList?.title
+        holder.releaseDate.text = movieList?.release_date?.take(4)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.thumbnails)
         val title: TextView = itemView.findViewById(R.id.title)
         val releaseDate: TextView = itemView.findViewById(R.id.date_release)
+    }
+
+    companion object {
+        private val MOVIE_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+
+            override fun areItemsTheSame(oldMovies: Movie, newMovies: Movie): Boolean =
+                oldMovies.id == newMovies.id
+
+            override fun areContentsTheSame(oldMovies: Movie, newMovies: Movie): Boolean =
+                oldMovies == newMovies
+
+        }
     }
 }
