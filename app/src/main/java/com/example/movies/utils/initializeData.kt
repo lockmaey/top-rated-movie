@@ -2,7 +2,6 @@ package com.example.movies.utils
 
 import android.content.Context
 import com.example.movies.database.entity.Movie
-import com.example.movies.utils.loadJsonFile
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
